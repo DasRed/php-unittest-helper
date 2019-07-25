@@ -1,0 +1,17 @@
+{
+    "name": "phpunittest-helper",
+    "autoload": {
+        "psr-4": {
+            "PHPUnit\\Helper\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPUnit\\Helper\\": "test/"
+        }
+    },
+    "require-dev": {
+        "php": ">=7.3",
+        "phpunit/phpunit": ">=8.0.0"
+    }
+}

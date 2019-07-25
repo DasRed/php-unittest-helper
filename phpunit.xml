@@ -1,0 +1,20 @@
+<phpunit
+        bootstrap="./vendor/autoload.php"
+        backupGlobals="false"
+        colors="true"
+        forceCoversAnnotation="true"
+        cacheResult="false"
+        cacheTokens="false"
+>
+    <testsuites>
+        <testsuite name="PHPUnitTests Helper Suite">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
