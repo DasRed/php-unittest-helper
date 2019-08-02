@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \PHPUnit\Helper\TestMockTrait
+ * @coversDefaultClass \DasRed\PHPUnit\Helper\TestMockTrait
  */
 class TestMockTraitTest extends TestCase {
     use TestMockTrait;

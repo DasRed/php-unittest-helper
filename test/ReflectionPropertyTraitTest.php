@@ -1,13 +1,12 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Helper\fixture\ReflectionPropertyTraitTestTestClass;
+use DasRed\PHPUnit\Helper\fixture\ReflectionPropertyTraitTestTestClass;
 
 /**
- * @coversDefaultClass \PHPUnit\Helper\ReflectionPropertyTrait
+ * @coversDefaultClass \DasRed\PHPUnit\Helper\ReflectionPropertyTrait
  */
 class ReflectionPropertyTraitTest extends TestCase {
     use ReflectionMethodTrait;

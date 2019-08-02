@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;

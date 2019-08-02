@@ -1,13 +1,13 @@
 {
-    "name": "phpunittest-helper",
+    "name": "dasred/phpunittest-helper",
     "autoload": {
         "psr-4": {
-            "PHPUnit\\Helper\\": "src/"
+            "DasRed\\PHPUnit\\Helper\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PHPUnit\\Helper\\": "test/"
+            "DasRed\\PHPUnit\\Helper\\": "test/"
         }
     },
     "require-dev": {

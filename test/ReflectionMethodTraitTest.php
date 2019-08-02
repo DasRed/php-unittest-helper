@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Helper\fixture\ReflectionMethodTraitTestTestClass;
+use DasRed\PHPUnit\Helper\fixture\ReflectionMethodTraitTestTestClass;
 
 /**
- * @coversDefaultClass \PHPUnit\Helper\ReflectionMethodTrait
+ * @coversDefaultClass \DasRed\PHPUnit\Helper\ReflectionMethodTrait
  */
 class ReflectionMethodTraitTest extends TestCase {
     use ReflectionMethodTrait;

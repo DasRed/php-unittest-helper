@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
 trait ReflectionMethodTrait {
     public function assertMethodAnnotationContains(string $class, string $method, string $contains): void {

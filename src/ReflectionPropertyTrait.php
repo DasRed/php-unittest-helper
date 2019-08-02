@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
 trait ReflectionPropertyTrait {
     public function assertPropertyAnnotationContains(string $class, string $property, string $contains) {

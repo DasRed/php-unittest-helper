@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnit\Helper\fixture;
+namespace DasRed\PHPUnit\Helper\fixture;
 
 class ReflectionPropertyTraitTestTestClass {
     /**

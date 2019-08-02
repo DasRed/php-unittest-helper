@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPUnit\Helper;
+namespace DasRed\PHPUnit\Helper;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \PHPUnit\Helper\TestGetterSetterTrait
+ * @coversDefaultClass \DasRed\PHPUnit\Helper\TestGetterSetterTrait
  */
 class TestGetterSetterTraitTest extends TestCase {
     public function prepare() {
