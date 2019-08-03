@@ -4,6 +4,7 @@ namespace DasRed\PHPUnit\Helper;
 
 use DasRed\PHPUnit\Helper\fixture\ReflectionMethodTraitTestTestClass;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 
 /**
  * @coversDefaultClass \DasRed\PHPUnit\Helper\ReflectionMethodTrait
@@ -19,6 +20,7 @@ class ReflectionMethodTraitTest extends TestCase {
 
     /**
      * @covers ::assertMethodAnnotationContains
+     * @throws ReflectionException
      */
     public function testAssertMethodAnnotationContains() {
         static::assertMethodAnnotationContains(ReflectionMethodTraitTestTestClass::class, 'method', 'lol');
@@ -27,10 +29,11 @@ class ReflectionMethodTraitTest extends TestCase {
 
     /**
      * @covers ::invoke
+     * @throws ReflectionException
      */
     public function testInvoke() {
         $obj = new ReflectionMethodTraitTestTestClass();
-        $result = static::invokeStatic(ReflectionMethodTrait::class, 'invoke', [$obj, 'callNonStatic', ['a', 1, 2]]);
+        $result = static::invoke($obj, 'callNonStatic', ['a', 1, 2]);
 
         static::assertSame('abc', $result);
         static::assertSame([['a', 1, 2]], ReflectionMethodTraitTestTestClass::$nonStaticCallParameters);
@@ -39,9 +42,10 @@ class ReflectionMethodTraitTest extends TestCase {
 
     /**
      * @covers ::invokeStatic
+     * @throws ReflectionException
      */
     public function testInvokeStatic() {
-        $result = static::invokeStatic(ReflectionMethodTrait::class, 'invokeStatic', [ReflectionMethodTraitTestTestClass::class, 'callStatic', ['a', 1, 2]]);
+        $result = static::invokeStatic(ReflectionMethodTraitTestTestClass::class, 'callStatic', ['a', 1, 2]);
 
         static::assertSame('def', $result);
         static::assertSame([['a', 1, 2]], ReflectionMethodTraitTestTestClass::$staticCallParameters);

@@ -2,6 +2,7 @@
 
 namespace DasRed\PHPUnit\Helper;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,32 @@ class TestGetterSetterTraitTest extends TestCase {
 
             protected $c;
 
+            protected $d;
+
+            protected $e;
+
+            protected function isD(): bool {
+                return $this->d;
+            }
+
+            protected function setD(bool $value): self {
+                $this->d = $value;
+
+                /** @noinspection PhpIncompatibleReturnTypeInspection */
+                return $this;
+            }
+
+            protected function hasE(): bool {
+                return $this->e;
+            }
+
+            protected function setE(bool $value): self {
+                $this->e = $value;
+
+                /** @noinspection PhpIncompatibleReturnTypeInspection */
+                return $this;
+            }
+
             protected function getA(): string {
                 return $this->a;
             }
@@ -30,11 +57,11 @@ class TestGetterSetterTraitTest extends TestCase {
                 return $this;
             }
 
-            protected function getB(): \DateTime {
+            protected function getB(): DateTime {
                 return $this->b;
             }
 
-            protected function setB(\DateTime $b): self {
+            protected function setB(DateTime $b): self {
                 $this->b = $b;
 
                 /** @noinspection PhpIncompatibleReturnTypeInspection */
@@ -53,8 +80,8 @@ class TestGetterSetterTraitTest extends TestCase {
             }
         };
 
-        $dateA = \DateTime::createFromFormat('d.m.Y', '16.01.2012');
-        $dateB = \DateTime::createFromFormat('d.m.Y', '19.01.2014');
+        $dateA = DateTime::createFromFormat('d.m.Y', '16.01.2012');
+        $dateB = DateTime::createFromFormat('d.m.Y', '19.01.2014');
 
         return [$instance, $dateA, $dateB];
     }
@@ -79,5 +106,15 @@ class TestGetterSetterTraitTest extends TestCase {
         static::validateGetterSetterForProperty($instance, 'a', 'a', 'b', false);
         static::validateGetterSetterForProperty($instance, 'b', $dateA, $dateB, false);
         static::validateGetterSetterForProperty($instance, 'c', 'c', 'd', true);
+    }
+
+    /**
+     * @covers ::validateGetterSetterForProperty
+     */
+    public function testValidateGetterSetterPropertyForBoolean() {
+        list($instance) = $this->prepare();
+
+        static::validateGetterSetterForProperty($instance, 'd', false, true, false, 'is');
+        static::validateGetterSetterForProperty($instance, 'e', false, true, false, 'has');
     }
 }

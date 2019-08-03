@@ -8,6 +8,8 @@ class ReflectionPropertyTraitTestTestClass {
      */
     protected $property;
 
+    public $pub = 'abc';
+
     protected $value = 'abc';
 
     protected static $valueStatic = 'def';

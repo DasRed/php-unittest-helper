@@ -9,18 +9,17 @@ use ReflectionObject;
 use ReflectionProperty;
 
 trait ReflectionPropertyTrait {
+    /**
+     * @param string $class
+     * @param string $property
+     * @param string $contains
+     * @throws ReflectionException
+     */
     public static function assertPropertyAnnotationContains(string $class, string $property, string $contains) {
-        try {
-            static::assertStringContainsString($contains, (new ReflectionProperty($class, $property))->getDocComment(), 'Annotation of property "' . $class . '::$' . $property . '" does not contains "' . $contains . '".');
-        }
-        catch (ReflectionException $e) {
-            static::fail($e->getMessage());
-        }
+        static::assertStringContainsString($contains, (new ReflectionProperty($class, $property))->getDocComment(), 'Annotation of property "' . $class . '::$' . $property . '" does not contains "' . $contains . '".');
     }
 
     abstract public static function assertStringContainsString(string $needle, string $haystack, string $message = ''): void;
-
-    abstract public static function fail(string $message = ''): void;
 
     /**
      * @param object $object
@@ -49,29 +48,17 @@ trait ReflectionPropertyTrait {
             }
         } while ($reflector = $reflector->getParentClass());
 
-        throw new Exception(
-            sprintf(
-                'Attribute "%s" not found in object.',
-                $attributeName
-            )
-        );
+        throw new Exception('Attribute "' . $attributeName . '" not found in object.');
     }
 
     /**
      * @param string $class
      * @param string $name
      * @return mixed
+     * @throws ReflectionException
      */
     public static function getValueDefault(string $class, string $name) {
-        try {
-            $reflection = new ReflectionClass($class);
-        }
-        catch (ReflectionException $e) {
-            static::fail($e->getMessage());
-
-            return null;
-        }
-
+        $reflection = new ReflectionClass($class);
         $values = $reflection->getDefaultProperties();
         if (array_key_exists($name, $values) === false) {
             return null;
@@ -84,16 +71,10 @@ trait ReflectionPropertyTrait {
      * @param string $class
      * @param string $name
      * @return mixed
+     * @throws ReflectionException
      */
     public static function getValueStatic(string $class, string $name) {
-        try {
-            $reflectionProperty = new ReflectionProperty($class, $name);
-        }
-        catch (ReflectionException $e) {
-            static::fail($e->getMessage());
-
-            return null;
-        }
+        $reflectionProperty = new ReflectionProperty($class, $name);
         $reflectionProperty->setAccessible(true);
 
         return $reflectionProperty->getValue();
@@ -103,31 +84,23 @@ trait ReflectionPropertyTrait {
      * @param object $instance
      * @param string $name
      * @param mixed $value
+     * @throws ReflectionException
      */
     public static function setValue(object $instance, string $name, $value) {
-        try {
-            $reflectionProperty = new ReflectionProperty($instance, $name);
-            $reflectionProperty->setAccessible(true);
-            $reflectionProperty->setValue($instance, $value);
-        }
-        catch (ReflectionException $e) {
-            static::fail($e->getMessage());
-        }
+        $reflectionProperty = new ReflectionProperty($instance, $name);
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($instance, $value);
     }
 
     /**
      * @param string $class
      * @param string $name
      * @param mixed $value
+     * @throws ReflectionException
      */
     public static function setValueStatic(string $class, string $name, $value) {
-        try {
-            $reflectionProperty = new ReflectionProperty($class, $name);
-            $reflectionProperty->setAccessible(true);
-            $reflectionProperty->setValue(null, $value);
-        }
-        catch (ReflectionException $e) {
-            static::fail($e->getMessage());
-        }
+        $reflectionProperty = new ReflectionProperty($class, $name);
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue(null, $value);
     }
 }

@@ -4,6 +4,7 @@ namespace DasRed\PHPUnit\Helper;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * @coversDefaultClass \DasRed\PHPUnit\Helper\TestMockTrait
@@ -15,18 +16,16 @@ class TestMockTraitTest extends TestCase {
      * @covers ::createMockMock
      */
     public function testCreateMockMockWithMethods() {
-        $trait = new class extends TestCase {
-            use TestMockTrait;
-        };
-
-        /** @var MockObject|\stdClass $result */
-        $result = $trait->createMockMock(\stdClass::class, 'a', 'b');
+        /** @var MockObject|stdClass $result */
+        $result = $this->createMockMock(stdClass::class, 'a', 'b');
         $result->expects(static::once())->method('a')->willReturn('a');
         $result->expects(static::once())->method('b')->willReturn('b');
 
-        static::assertInstanceOf(\stdClass::class, $result);
+        static::assertInstanceOf(stdClass::class, $result);
         static::assertInstanceOf(MockObject::class, $result);
+        /** @noinspection PhpUndefinedMethodInspection */
         static::assertEquals('a', $result->a());
+        /** @noinspection PhpUndefinedMethodInspection */
         static::assertEquals('b', $result->b());
     }
 
@@ -34,14 +33,10 @@ class TestMockTraitTest extends TestCase {
      * @covers ::createMockMock
      */
     public function testCreateMockMockWithoutMethods() {
-        $trait = new class extends TestCase {
-            use TestMockTrait;
-        };
+        /** @var MockObject|stdClass $result */
+        $result = $this->createMockMock(stdClass::class);
 
-        /** @var MockObject|\stdClass $result */
-        $result = $trait->createMockMock(\stdClass::class);
-
-        static::assertInstanceOf(\stdClass::class, $result);
+        static::assertInstanceOf(stdClass::class, $result);
         static::assertInstanceOf(MockObject::class, $result);
     }
 }

@@ -2,18 +2,21 @@
 
 namespace DasRed\PHPUnit\Helper;
 
+use DasRed\PHPUnit\Helper\fixture\ReflectionPropertyTraitTestExtendsClass;
 use DasRed\PHPUnit\Helper\fixture\ReflectionPropertyTraitTestTestClass;
+use Exception;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 
 /**
  * @coversDefaultClass \DasRed\PHPUnit\Helper\ReflectionPropertyTrait
  */
 class ReflectionPropertyTraitTest extends TestCase {
-    use ReflectionMethodTrait;
     use ReflectionPropertyTrait;
 
     /**
      * @covers ::assertPropertyAnnotationContains
+     * @throws ReflectionException
      */
     public function testAssertPropertyAnnotationContains() {
         static::assertPropertyAnnotationContains(ReflectionPropertyTraitTestTestClass::class, 'property', 'lol');
@@ -23,47 +26,75 @@ class ReflectionPropertyTraitTest extends TestCase {
     /**
      * @covers ::getValue
      * @covers ::setValue
+     * @throws ReflectionException
+     * @throws Exception
      */
     public function testGetSetValue() {
         $obj = new ReflectionPropertyTraitTestTestClass();
-        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValue', [$obj, 'value']);
+        $result = static::getValue($obj, 'value');
         static::assertSame('abc', $result);
 
-        static::invokeStatic(ReflectionPropertyTrait::class, 'setValue', [$obj, 'value', 'nuff']);
-        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValue', [$obj, 'value']);
+        static::setValue($obj, 'value', 'nuff');
+        $result = static::getValue($obj, 'value');
         static::assertSame('nuff', $result);
     }
 
     /**
      * @covers ::getValueStatic
      * @covers ::setValueStatic
+     * @throws ReflectionException
      */
     public function testGetSetValueStatic() {
-        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic']);
+        $result = static::getValueStatic(ReflectionPropertyTraitTestTestClass::class, 'valueStatic');
         static::assertSame('def', $result);
 
-        static::invokeStatic(ReflectionPropertyTrait::class, 'setValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic', 'narf']);
-        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic']);
+        static::setValueStatic(ReflectionPropertyTraitTestTestClass::class, 'valueStatic', 'narf');
+        $result = static::getValueStatic(ReflectionPropertyTraitTestTestClass::class, 'valueStatic');
         static::assertSame('narf', $result);
     }
 
     /**
      * @covers ::getValueDefault
+     * @throws ReflectionException
      */
     public function testGetValueDefault() {
         $obj = new ReflectionPropertyTraitTestTestClass();
         $obj->setValue('feiorwpfgjeiorq');
 
-        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueDefault', [ReflectionPropertyTraitTestTestClass::class, 'value']);
+        $result = static::getValueDefault(ReflectionPropertyTraitTestTestClass::class, 'value');
 
         static::assertSame('abc', $result);
     }
 
     /**
      * @covers ::getValueDefault
+     * @throws ReflectionException
      */
     public function testGetValueDefaultPropertyDoesNotExists() {
-        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueDefault', [ReflectionPropertyTraitTestTestClass::class, 'htrdehbfgdr']);
+        $result = static::getValueDefault(ReflectionPropertyTraitTestTestClass::class, 'htrdehbfgdr');
         static::assertNull($result);
+    }
+
+    /**
+     * @covers ::getValue
+     * @throws Exception
+     */
+    public function testGetValueFailed() {
+        $obj = new ReflectionPropertyTraitTestExtendsClass();
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Attribute "valuex" not found in object.');
+
+        static::getValue($obj, 'valuex');
+    }
+
+    /**
+     * @covers ::getValue
+     * @throws Exception
+     */
+    public function testGetValuePublic() {
+        $obj = new ReflectionPropertyTraitTestTestClass();
+        $result = static::getValue($obj, 'pub');
+        static::assertSame('abc', $result);
+
     }
 }

@@ -23,7 +23,6 @@ trait TestGetterSetterTrait {
      */
     public static function validateGetterSetter(object $instance, string $getter, string $setter, $valueA, $valueB, bool $nullable = false) {
         static::assertEquals($instance, static::invoke($instance, $setter, [$valueA]));
-
         $resultA = static::invoke($instance, $getter);
         if ($valueA instanceof DateTime) {
             /** @var DateTime $resultA */
@@ -52,26 +51,14 @@ trait TestGetterSetterTrait {
     }
 
     /**
-     * /**
      * @param object $instance
      * @param string $property
      * @param mixed $valueA
      * @param mixed $valueB
+     * @param bool $nullable
      * @param string $getterPrefix
-     * @param bool $nullable
      */
-    public static function validateGetterSetterForBooleanProperty(object $instance, string $property, $valueA, $valueB, string $getterPrefix = 'is', bool $nullable = false): void {
-        static::validateGetterSetter($instance, strtolower($getterPrefix) . ucfirst($property), 'set' . ucfirst($property), $valueA, $valueB, $nullable);
-    }
-
-    /**
-     * @param object $instance
-     * @param string $property
-     * @param mixed $valueA
-     * @param mixed $valueB
-     * @param bool $nullable
-     */
-    public static function validateGetterSetterForProperty(object $instance, string $property, $valueA, $valueB, bool $nullable = false) {
-        static::validateGetterSetter($instance, 'get' . ucfirst($property), 'set' . ucfirst($property), $valueA, $valueB, $nullable);
+    public static function validateGetterSetterForProperty(object $instance, string $property, $valueA, $valueB, bool $nullable = false, string $getterPrefix = 'get') {
+        static::validateGetterSetter($instance, $getterPrefix . ucfirst($property), 'set' . ucfirst($property), $valueA, $valueB, $nullable);
     }
 }
