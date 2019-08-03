@@ -1,7 +1,7 @@
 {
     "name": "dasred/unittest-helper",
     "homepage": "https://github.com/DasRed/php-unittest-helper",
-    "license": "GPL-3.0-only / GPL-3.0-or-later",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Marco Starker",
