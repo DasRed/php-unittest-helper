@@ -1,5 +1,13 @@
 {
-    "name": "dasred/phpunittest-helper",
+    "name": "dasred/unittest-helper",
+    "homepage": "https://github.com/DasRed/php-unittest-helper",
+    "license": "GPL-3.0-only / GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Marco Starker",
+            "email": "marco.starker@gmx.net"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "DasRed\\PHPUnit\\Helper\\": "src/"
@@ -10,8 +18,10 @@
             "DasRed\\PHPUnit\\Helper\\": "test/"
         }
     },
+    "require": {
+        "php": ">=7.3"
+    },
     "require-dev": {
-        "php": ">=7.3",
         "phpunit/phpunit": ">=8.0.0"
     }
 }

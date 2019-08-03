@@ -2,12 +2,15 @@
 
 namespace DasRed\PHPUnit\Helper;
 
+use ReflectionClass;
+use ReflectionException;
+
 trait ReflectionClassTrait {
-    public function assertClassAnnotationContains(string $class, string $contains): void {
+    public static function assertClassAnnotationContains(string $class, string $contains): void {
         try {
-            static::assertStringContainsString($contains, (new \ReflectionClass($class))->getDocComment(), 'Annotation of class "' . $class . '" does not contains "' . $contains . '".');
+            static::assertStringContainsString($contains, (new ReflectionClass($class))->getDocComment(), 'Annotation of class "' . $class . '" does not contains "' . $contains . '".');
         }
-        catch (\ReflectionException $e) {
+        catch (ReflectionException $e) {
             static::fail($e->getMessage());
         }
     }

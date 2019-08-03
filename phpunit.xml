@@ -7,7 +7,7 @@
         cacheTokens="false"
 >
     <testsuites>
-        <testsuite name="PHPUnitTests Helper Suite">
+        <testsuite name="UnitTest Helper Suite">
             <directory>test</directory>
         </testsuite>
     </testsuites>

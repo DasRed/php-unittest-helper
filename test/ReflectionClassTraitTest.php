@@ -9,16 +9,13 @@ use DasRed\PHPUnit\Helper\fixture\ReflectionClassTraitTestTestClass;
  * @coversDefaultClass \DasRed\PHPUnit\Helper\ReflectionClassTrait
  */
 class ReflectionClassTraitTest extends TestCase {
+    use ReflectionClassTrait;
 
     /**
      * @covers ::assertClassAnnotationContains
      */
     public function testAssertClassAnnotationContains() {
-        $trait = new class extends TestCase {
-            use ReflectionClassTrait;
-        };
-
-        $trait->assertClassAnnotationContains(ReflectionClassTraitTestTestClass::class, 'lol');
-        $trait->assertClassAnnotationContains(ReflectionClassTraitTestTestClass::class, 'nuff');
+        static::assertClassAnnotationContains(ReflectionClassTraitTestTestClass::class, 'lol');
+        static::assertClassAnnotationContains(ReflectionClassTraitTestTestClass::class, 'nuff');
     }
 }

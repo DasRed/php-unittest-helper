@@ -2,12 +2,15 @@
 
 namespace DasRed\PHPUnit\Helper;
 
+use ReflectionException;
+use ReflectionMethod;
+
 trait ReflectionMethodTrait {
-    public function assertMethodAnnotationContains(string $class, string $method, string $contains): void {
+    public static function assertMethodAnnotationContains(string $class, string $method, string $contains): void {
         try {
-            static::assertStringContainsString($contains, (new \ReflectionMethod($class, $method))->getDocComment(), 'Annotation of method "' . $class . '::' . $method . '" does not contains "' . $contains . '".');
+            static::assertStringContainsString($contains, (new ReflectionMethod($class, $method))->getDocComment(), 'Annotation of method "' . $class . '::' . $method . '" does not contains "' . $contains . '".');
         }
-        catch (\ReflectionException $e) {
+        catch (ReflectionException $e) {
             static::fail($e->getMessage());
         }
     }
@@ -22,15 +25,15 @@ trait ReflectionMethodTrait {
      * @param array $arguments
      * @return mixed
      */
-    public function invoke(object $instance, string $name, array $arguments = []) {
+    public static function invoke(object $instance, string $name, array $arguments = []) {
         $result = null;
 
         try {
-            $reflectionMethod = new \ReflectionMethod($instance, $name);
+            $reflectionMethod = new ReflectionMethod($instance, $name);
             $reflectionMethod->setAccessible(true);
             $result = $reflectionMethod->invokeArgs($instance, $arguments);
         }
-        catch (\ReflectionException $e) {
+        catch (ReflectionException $e) {
             static::fail($e->getMessage());
         }
 
@@ -43,14 +46,14 @@ trait ReflectionMethodTrait {
      * @param array $arguments
      * @return mixed
      */
-    public function invokeStatic(string $class, string $name, array $arguments = []) {
+    public static function invokeStatic(string $class, string $name, array $arguments = []) {
         $result = null;
         try {
-            $reflectionMethod = new \ReflectionMethod($class, $name);
+            $reflectionMethod = new ReflectionMethod($class, $name);
             $reflectionMethod->setAccessible(true);
             $result = $reflectionMethod->invokeArgs(null, $arguments);
         }
-        catch (\ReflectionException $e) {
+        catch (ReflectionException $e) {
             static::fail($e->getMessage());
         }
 

@@ -2,25 +2,22 @@
 
 namespace DasRed\PHPUnit\Helper;
 
-use PHPUnit\Framework\TestCase;
 use DasRed\PHPUnit\Helper\fixture\ReflectionPropertyTraitTestTestClass;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \DasRed\PHPUnit\Helper\ReflectionPropertyTrait
  */
 class ReflectionPropertyTraitTest extends TestCase {
     use ReflectionMethodTrait;
+    use ReflectionPropertyTrait;
 
     /**
      * @covers ::assertPropertyAnnotationContains
      */
     public function testAssertPropertyAnnotationContains() {
-        $trait = new class extends TestCase {
-            use ReflectionPropertyTrait;
-        };
-
-        $trait->assertPropertyAnnotationContains(ReflectionPropertyTraitTestTestClass::class, 'property', 'lol');
-        $trait->assertPropertyAnnotationContains(ReflectionPropertyTraitTestTestClass::class, 'property', 'nuff');
+        static::assertPropertyAnnotationContains(ReflectionPropertyTraitTestTestClass::class, 'property', 'lol');
+        static::assertPropertyAnnotationContains(ReflectionPropertyTraitTestTestClass::class, 'property', 'nuff');
     }
 
     /**
@@ -28,15 +25,13 @@ class ReflectionPropertyTraitTest extends TestCase {
      * @covers ::setValue
      */
     public function testGetSetValue() {
-        $trait = $this->getMockBuilder(ReflectionPropertyTrait::class)->getMockForTrait();
-
         $obj = new ReflectionPropertyTraitTestTestClass();
-        $result = $this->invoke($trait, 'getValue', [$obj, 'value']);
-        self::assertSame('abc', $result);
+        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValue', [$obj, 'value']);
+        static::assertSame('abc', $result);
 
-        $this->invoke($trait, 'setValue', [$obj, 'value', 'nuff']);
-        $result = $this->invoke($trait, 'getValue', [$obj, 'value']);
-        self::assertSame('nuff', $result);
+        static::invokeStatic(ReflectionPropertyTrait::class, 'setValue', [$obj, 'value', 'nuff']);
+        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValue', [$obj, 'value']);
+        static::assertSame('nuff', $result);
     }
 
     /**
@@ -44,38 +39,31 @@ class ReflectionPropertyTraitTest extends TestCase {
      * @covers ::setValueStatic
      */
     public function testGetSetValueStatic() {
-        $trait = $this->getMockBuilder(ReflectionPropertyTrait::class)->getMockForTrait();
+        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic']);
+        static::assertSame('def', $result);
 
-        $result = $this->invoke($trait, 'getValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic']);
-        self::assertSame('def', $result);
-
-        $this->invoke($trait, 'setValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic', 'narf']);
-        $result = $this->invoke($trait, 'getValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic']);
-        self::assertSame('narf', $result);
+        static::invokeStatic(ReflectionPropertyTrait::class, 'setValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic', 'narf']);
+        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueStatic', [ReflectionPropertyTraitTestTestClass::class, 'valueStatic']);
+        static::assertSame('narf', $result);
     }
 
     /**
      * @covers ::getValueDefault
      */
     public function testGetValueDefault() {
-        $trait = $this->getMockBuilder(ReflectionPropertyTrait::class)->getMockForTrait();
-
         $obj = new ReflectionPropertyTraitTestTestClass();
         $obj->setValue('feiorwpfgjeiorq');
 
-        $result = $this->invoke($trait, 'getValueDefault', [ReflectionPropertyTraitTestTestClass::class, 'value']);
+        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueDefault', [ReflectionPropertyTraitTestTestClass::class, 'value']);
 
-        self::assertSame('abc', $result);
+        static::assertSame('abc', $result);
     }
 
     /**
      * @covers ::getValueDefault
      */
     public function testGetValueDefaultPropertyDoesNotExists() {
-        $trait = $this->getMockBuilder(ReflectionPropertyTrait::class)->getMockForTrait();
-
-        $result = $this->invoke($trait, 'getValueDefault', [ReflectionPropertyTraitTestTestClass::class, 'htrdehbfgdr']);
-
-        self::assertNull($result);
+        $result = static::invokeStatic(ReflectionPropertyTrait::class, 'getValueDefault', [ReflectionPropertyTraitTestTestClass::class, 'htrdehbfgdr']);
+        static::assertNull($result);
     }
 }
