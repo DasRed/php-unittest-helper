@@ -1,20 +1,20 @@
-<phpunit
-        bootstrap="./vendor/autoload.php"
-        backupGlobals="false"
-        colors="true"
-        forceCoversAnnotation="true"
-        cacheResult="false"
-        cacheTokens="false"
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="./vendor/autoload.php"
+         backupGlobals="false"
+         colors="true"
+         forceCoversAnnotation="true"
+         cacheResult="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-    <testsuites>
-        <testsuite name="UnitTest Helper Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+  <coverage>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="UnitTest Helper Suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
